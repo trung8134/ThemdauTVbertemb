@@ -8,7 +8,7 @@ from tensorflow.keras.models import load_model
 from data_loader import load_vectorization_from_disk
 from positional_embedding import PositionalEmbedding
 from transformer_decoder import TransformerDecoder
-from restore_vietnamese_diacritics.transformer_encoder import TransformerEncoder
+from transformer_encoder import TransformerEncoder
 
 
 class TransformerModel:
