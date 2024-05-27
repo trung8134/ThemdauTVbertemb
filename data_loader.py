@@ -84,7 +84,7 @@ def save_vectorization(vectorization, file_path):
     '''
 
     with open(file_path, 'wb') as f:
-        f.write(joblib.dumps({'config': vectorization.get_config(),
+        f.write(joblib.dump({'config': vectorization.get_config(),
             'weights': vectorization.get_weights()}))
 
 
