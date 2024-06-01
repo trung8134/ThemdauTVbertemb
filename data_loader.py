@@ -85,14 +85,9 @@ def save_vectorization(vectorization, file_path):
     '''
 
     with open(file_path, 'wb') as f:
-<<<<<<< HEAD
         f.write(pickle.dump({'config': vectorization.get_config(),
             'weights': vectorization.get_weights()}), file_path(file_path))
-=======
-        f.write(pickle.dumps({'config': vectorization.get_config(),
-            'weights': vectorization.get_weights()}))
 
->>>>>>> 3257df8c7b023febe172d0a01a687fdce7bb4eb8
 
 # func sử dụng để load model weights vector hóa dữ liệu
 def load_vectorization_from_disk(vectorization_path):
