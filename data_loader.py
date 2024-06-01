@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import joblib
+import pickle
 import random
 
 import tensorflow as tf
@@ -41,12 +41,12 @@ def split_pairs(text_pairs, ratio=.10, shuffle=False):
 
     return train_pairs, val_pairs, test_pairs
 
-
+# func load data từ file path
 def load_data(file_path, limit=None, ratio=.10, shuffle=False):
     text_pairs = get_text_pairs(file_path, limit)
     return split_pairs(text_pairs, ratio, shuffle)
 
-
+# model vector hóa dữ liệu 
 def create_vectorizations(train_pairs, sequence_length=50, vocab_size=15000):
     source_vectorization = layers.TextVectorization(
         max_tokens=vocab_size,
@@ -77,6 +77,7 @@ def create_bert_tokenizations(train_pairs):
 
     return source_tokenization, target_tokenization
 
+# func sử dụng để lưu model weights vector hóa dữ liệu
 def save_vectorization(vectorization, file_path):
     '''
     Save the config and weights of a vectorization to disk as joblib file,
@@ -84,10 +85,16 @@ def save_vectorization(vectorization, file_path):
     '''
 
     with open(file_path, 'wb') as f:
-        f.write(joblib.dumps({'config': vectorization.get_config(),
+<<<<<<< HEAD
+        f.write(pickle.dump({'config': vectorization.get_config(),
+            'weights': vectorization.get_weights()}), file_path(file_path))
+=======
+        f.write(pickle.dumps({'config': vectorization.get_config(),
             'weights': vectorization.get_weights()}))
 
+>>>>>>> 3257df8c7b023febe172d0a01a687fdce7bb4eb8
 
+# func sử dụng để load model weights vector hóa dữ liệu
 def load_vectorization_from_disk(vectorization_path):
     '''
     Load a saved vectorization from disk.
@@ -96,7 +103,7 @@ def load_vectorization_from_disk(vectorization_path):
     '''
 
     with open(vectorization_path, 'rb') as f:
-        from_disk = joblib.load(f)
+        from_disk = pickle.load(f)
         new_v = layers.TextVectorization(max_tokens=from_disk['config']['max_tokens'],
             output_mode='int',
             output_sequence_length=from_disk['config']['output_sequence_length'])
@@ -116,7 +123,7 @@ def format_dataset(stripped, source_vectorization, original, target_vectorizatio
         'original': origin[:, :-1]
     }, origin[:, 1:])
 
-
+# func tạo các tập train_ds, val_ds, test_ds
 def make_dataset(pairs, source_vectorization, target_vectorization, batch_size):
     stripped_texts, original_texts = zip(*pairs)
     stripped_texts = list(stripped_texts)

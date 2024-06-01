@@ -8,13 +8,14 @@ from tensorflow.keras.models import load_model
 from data_loader import load_vectorization_from_disk
 from positional_embedding import PositionalEmbedding
 from transformer_decoder import TransformerDecoder
-from restore_vietnamese_diacritics.transformer_encoder import TransformerEncoder
+from transformer_encoder import TransformerEncoder
 
 
 class TransformerModel:
     def __init__(self, source_vectorization, target_vectorization, model_path=None,
         sequence_length=50, vocab_size=15000, embed_dim=256, dense_dim=2048, num_heads=8, drop_out=.5):
 
+        # load model vector hóa dữ liệu 
         self.source_vectorization = self.load_vectorization(source_vectorization)
         self.target_vectorization = self.load_vectorization(target_vectorization)
 
