@@ -47,7 +47,7 @@ def load_data(file_path, limit=None, ratio=.10, shuffle=False):
     return split_pairs(text_pairs, ratio, shuffle)
 
 # model vector hóa dữ liệu 
-def create_vectorizations(train_pairs, sequence_length=50, vocab_size=15000, standardize):
+def create_vectorizations(train_pairs, sequence_length=50, vocab_size=15000, standardize=True):
     source_vectorization = layers.TextVectorization(
         max_tokens=vocab_size,
         output_mode='int',
