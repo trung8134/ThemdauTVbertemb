@@ -47,11 +47,12 @@ def load_data(file_path, limit=None, ratio=.10, shuffle=False):
     return split_pairs(text_pairs, ratio, shuffle)
 
 # model vector hóa dữ liệu 
-def create_vectorizations(train_pairs, sequence_length=50, vocab_size=15000):
+def create_vectorizations(train_pairs, sequence_length=50, vocab_size=15000, standardize):
     source_vectorization = layers.TextVectorization(
         max_tokens=vocab_size,
         output_mode='int',
-        output_sequence_length=sequence_length
+        output_sequence_length=sequence_length,
+        standardize=standardize
     )
     train_stripped_texts = [n[0] for n in train_pairs]
     source_vectorization.adapt(train_stripped_texts)
@@ -59,7 +60,8 @@ def create_vectorizations(train_pairs, sequence_length=50, vocab_size=15000):
     target_vectorization = layers.TextVectorization(
         max_tokens=vocab_size,
         output_mode='int',
-        output_sequence_length=sequence_length+1
+        output_sequence_length=sequence_length+1,
+        standardize=standardize
     )
     train_original_texts = [n[1] for n in train_pairs]
     target_vectorization.adapt(train_original_texts)
